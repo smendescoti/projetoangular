@@ -1,0 +1,56 @@
+[
+    {
+        "nome" : "Ana Paula",
+        "email" : "anapaula@gmail.com",
+        "cpf" : "873.851.710-87",
+        "plano" : "Preferencial"
+    },
+    {
+        "nome" : "João Pedro",
+        "email" : "joaopedro@gmail.com",
+        "cpf" : "660.632.790-32",
+        "plano" : "Empresa"
+    },
+    {
+        "nome" : "Maria da Silva",
+        "email" : "mariasilva@gmail.com",
+        "cpf" : "007.210.790-16",
+        "plano" : "Empresa"
+    },
+    {
+        "nome" : "Bruno dos Santos",
+        "email" : "brunosantos@gmail.com",
+        "cpf" : "685.077.310-07",
+        "plano" : "Preferencial"
+    },
+    {
+        "nome" : "Carla Dias",
+        "email" : "carladias@gmail.com",
+        "cpf" : "616.892.890-15",
+        "plano" : "Preferencial"
+    },
+    {
+        "nome" : "José Pedro",
+        "email" : "josepedro@gmail.com",
+        "cpf" : "223.699.200-92",
+        "plano" : "Preferencial"
+    },
+    {
+        "nome" : "José Eduardo",
+        "email" : "joseeduardo@gmail.com",
+        "cpf" : "634.321.400-37",
+        "plano" : "Normal"
+    },
+    {
+        "nome" : "Marcos Oliveira",
+        "email" : "marcosoliveira@gmail.com",
+        "cpf" : "498.704.750-00",
+        "plano" : "Normal"
+    },
+    {
+        "nome" : "Paulo dos Santos",
+        "email" : "paulosantos@gmail.com",
+        "cpf" : "515.304.380-04",
+        "plano" : "Normal"
+    }
+]

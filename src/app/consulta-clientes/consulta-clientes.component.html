@@ -1,0 +1,211 @@
+<div class="card mb-4" *ngIf="isPageRender">
+    <div class="card-header">
+        <h5 style="font-weight: bold;"><i class="fas fa-users"></i> Consulta de Clientes</h5>
+        Preencha os campos abaixo para consultar clientes.
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="filtrarClientes()" autocomplete="off">
+
+            <div class="row">
+                <div class="col-md-5">
+                    <input type="text" class="form-control" formControlName="filtro"
+                        placeholder="Digite o nome do cliente desejado" />
+                    <span class="text-danger" *ngIf="f.filtro.touched && f.filtro.invalid">
+                        <span *ngIf="f.filtro.errors.required">
+                            <i class="fas fa-exclamation-circle"></i> Por favor, informe o filtro de pesquisa desejado.
+                        </span>
+                        <span *ngIf="f.filtro.errors.minlength">
+                            <i class="fas fa-exclamation-circle"></i> Por favor, preencha pelo menos 3 caracteres.
+                        </span>
+                        <span *ngIf="f.filtro.errors.maxlength">
+                            <i class="fas fa-exclamation-circle"></i> Por favor, preencha no máximo 150 caracteres.
+                        </span>
+                    </span>
+                </div>
+                <div class="col-md-7">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-search"></i> Pesquisar Clientes
+                    </button>
+                    &nbsp;
+                    <button class="btn btn-light">
+                        <i class="fas fa-download"></i> Download em PDF
+                    </button>
+                    &nbsp;
+                    <button class="btn btn-light">
+                        <i class="fas fa-download"></i> Download em Excel
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+        <table class="table table-sm table-hover table-stripped mt-4">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome do Cliente</th>
+                    <th>Email</th>
+                    <th>Cpf</th>
+                    <th>Plano</th>
+                    <th>Operações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let item of listagemClientes | paginate : { itemsPerPage : 5, currentPage : page, totalItems : listagemClientes.length }">
+                    <td>
+                        <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg"
+                            width="40" class="img-fluid" />
+                    </td>
+                    <td>{{item.nome}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.cpf}}</td>
+                    <td>{{item.plano}}</td>
+                    <td class="text-center">
+                        <button class="btn btn-primary btn-sm" 
+                            title="Atualizar Cliente"
+                            data-toggle="modal" 
+                            data-target="#janelaedicao"
+                            (click)="obterDados(item)">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        &nbsp;
+                        <button class="btn btn-danger btn-sm"
+                            title="Excluir Cliente"
+                            data-toggle="modal"
+                            data-target="#janelaexclusao"
+                            (click)="obterDados(item)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        Quantidade de registros: {{listagemClientes.length}}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <pagination-controls (pageChange)="handlePageChange($event)" previousLabel="Voltar" nextLabel="Avançar"
+            responsive="true"></pagination-controls>
+
+    </div>
+</div>
+
+<!-- Janela de edição -->
+<div id="janelaedicao" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white"><i class="fas fa-pencil-alt"></i> Editar dados do Cliente</h5>
+            </div>
+            <div class="modal-body">
+
+                <form #formEdicao="ngForm">
+
+                    <label>Nome do Cliente:</label>
+                    <input type="text" class="form-control" placeholder="Ex: João da Silva"
+                        [(ngModel)]="clienteSelecionado.nome" name="nome" />
+                    <br />
+
+                    <label>Email:</label>
+                    <input type="text" class="form-control" placeholder="Ex: joaosilva@gmail.com"
+                        [(ngModel)]="clienteSelecionado.email" name="email" />
+                    <br />
+
+                    <label>CPF:</label>
+                    <input type="text" class="form-control" placeholder="Ex: 123.456.789-00"
+                        [(ngModel)]="clienteSelecionado.cpf" name="cpf" />
+                    <br />
+
+                    <label>Selecione o Plano:</label>
+                    <select class="form-control" [(ngModel)]="clienteSelecionado.plano" name="plano">
+                        <option value="">Escolha uma opção</option>
+                        <option value="Preferencial">Preferencial</option>
+                        <option value="Empresa">Empresa</option>
+                        <option value="Normal">Normal</option>
+                    </select>
+                    <br />
+
+                    <label>Foto:</label>
+                    <input type="file" class="form-control" />
+                    <br />
+
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-check"></i> Salvar Alterações
+                    </button>
+                    <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">
+                        <i class="fas fa-ban"></i> Fechar
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Janela de exclusão -->
+<div id="janelaexclusao" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white"><i class="fas fa-trash"></i> Excluir dados do Cliente</h5>
+            </div>
+            <div class="modal-body">
+
+                <h5>Deseja excluir o cliente selecionado?</h5>
+                <hr/>
+
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        Nome do Cliente:
+                    </div>
+                    <div class="col-md-8">
+                        {{clienteSelecionado.nome}}
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        Email:
+                    </div>
+                    <div class="col-md-8">
+                        {{clienteSelecionado.email}}
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        CPF:
+                    </div>
+                    <div class="col-md-8">
+                        {{clienteSelecionado.cpf}}
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        Plano:
+                    </div>
+                    <div class="col-md-8">
+                        {{clienteSelecionado.plano}}
+                    </div>
+                </div>
+
+                <hr/>
+
+                <button type="button" class="btn btn-danger">
+                    <i class="fas fa-check"></i> Confirmar Exclusão
+                </button>
+                <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">
+                    <i class="fas fa-ban"></i> Fechar
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>

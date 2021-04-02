@@ -1,0 +1,84 @@
+<div class="card mb-4" *ngIf="isPageRender">
+       <div class="card-header">
+              <h5 style="font-weight: bold;"><i class="fas fa-users"></i> Cadastro de Clientes</h5>
+              Preencha o formulário abaixo para incluir um novo cliente.
+       </div>
+       <div class="card-body">
+
+              <form [formGroup]="form" (ngSubmit)="cadastrarCliente()" autocomplete="off">
+
+                     <div class="row">
+                            <div class="col-md-6">
+                                   <label>Nome do Cliente:</label>
+                                   <input type="text" class="form-control" formControlName="nome"
+                                          placeholder="Ex: João da Silva" />
+                                   <span class="text-danger" *ngIf="f.nome.touched && f.nome.invalid">
+                                          <span *ngIf="f.nome.errors.required">
+                                                 <i class="fas fa-exclamation-circle"></i> Por favor, informe o nome do cliente.
+                                          </span>
+                                          <span *ngIf="f.nome.errors.pattern">
+                                                 <i class="fas fa-exclamation-circle"></i> Por favor, informe de 6 a 150 caracteres alfabéticos.
+                                          </span>
+                                   </span>
+                            </div>
+                            <div class="col-md-3">
+                                   <label>Email:</label>
+                                   <input type="text" class="form-control" formControlName="email"
+                                          placeholder="Ex: joaosilva@gmail.com" />
+                                   <span class="text-danger" *ngIf="f.email.touched && f.email.invalid">
+                                          <span *ngIf="f.email.errors.required">
+                                                 <i class="fas fa-exclamation-circle"></i> Por favor, informe o email do cliente.
+                                          </span>
+                                          <span *ngIf="f.email.errors.email">
+                                                 <i class="fas fa-exclamation-circle"></i> Por favor, informe um endereço de email válido.
+                                          </span>
+                                   </span>
+                            </div>
+                            <div class="col-md-3">
+                                   <label>CPF:</label>
+                                   <input type="text" class="form-control" formControlName="cpf"
+                                          placeholder="Ex: 123.456.789-00" mask="000.000.000-00" />
+                                   <span class="text-danger" *ngIf="f.cpf.touched && f.cpf.invalid">
+                                          <span *ngIf="f.cpf.errors.required">
+                                                 <i class="fas fa-exclamation-circle"></i> Por favor, informe o CPF do cliente.
+                                          </span>
+                                          <span *ngIf="f.cpf.errors.pattern">
+                                                 <i class="fas fa-exclamation-circle"></i> Por favor, informe somente 11 dígitos numéricos.
+                                          </span>
+                                   </span>
+                            </div>
+                     </div>
+
+                     <div class="row mt-3">
+                            <div class="col-md-6">
+                                   <label>Selecione o Plano:</label>
+                                   <select class="form-control" formControlName="plano">
+                                          <option value="">Escolha uma opção</option>
+                                   </select>
+                                   <span class="text-danger" *ngIf="f.plano.touched && f.plano.invalid">
+                                          <span *ngIf="f.plano.errors.required">
+                                                 <i class="fas fa-exclamation-circle"></i> Por favor, informe o plano do cliente.
+                                          </span>
+                                   </span>
+                            </div>
+                            <div class="col-md-6">
+                                   <label>Foto:</label>
+                                   <input type="file" class="form-control" formControlName="foto" />
+                                   <span class="text-danger" *ngIf="f.foto.touched && f.foto.invalid">
+                                          <span *ngIf="f.foto.errors.required">
+                                                 <i class="fas fa-exclamation-circle"></i> Por favor, selecione a foto do cliente.
+                                          </span>
+                                   </span>
+                            </div>
+                     </div>
+
+                     <br />
+
+                     <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check"></i> Cadastrar Cliente
+                     </button>
+
+              </form>
+
+       </div>
+</div>
